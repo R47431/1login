@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AposLoginService {
-  
+
   private url:string = 'http://localhost:8080';
 
   constructor(private http:HttpClient) { }
@@ -18,5 +18,6 @@ export class AposLoginService {
 
   validaNomeDoUsuario():  Observable<Usuario>{
     return this.http.get<Usuario>(`${this.url}/acesso`)
+
   }
 }
