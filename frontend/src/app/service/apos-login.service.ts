@@ -18,6 +18,5 @@ export class AposLoginService {
 
   validaNomeDoUsuario():  Observable<Usuario>{
     return this.http.get<Usuario>(`${this.url}/acesso`)
-
   }
 }
