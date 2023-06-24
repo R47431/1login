@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <h2>Login</h2>
+        <div class="inputs">
+            <input type="text" placeholder="Nome" [(ngModel)]="usuario.nome" name="nome" class="input">
+            <input type="password" placeholder="senha" [(ngModel)]="usuario.senha" name="senha" class="input">
+        </div>
+        <button (click)="login()" class="form-control">Login</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+p{
+    background-color: aqua;
+}
+
+.a{
+    text-align: right;
+    padding: 10px;
+}
+.a a{
+    margin-right: 10px;
+    color: black;
+    font-size: large;
+    text-decoration: none;
+}

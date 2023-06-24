@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+    <table class="table">
+        <thead>
+          <tr>
+            <td>#</td>
+            <td>nome</td>
+            <td>senha</td>
+            <td>acesso</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliente of usuarios; index as i">
+            <td>{{i+1}}</td>
+            <td>{{cliente.nome}}</td>
+            <td>{{cliente.senha}}</td>
+            <td>{{cliente.acesso}}</td>
+          </tr>
+        </tbody>
+      </table>
+</body>
+</html>
