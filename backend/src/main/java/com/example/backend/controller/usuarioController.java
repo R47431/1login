@@ -1,14 +1,13 @@
 package com.example.backend.controller;
 
 
-
 import com.example.backend.models.Usuario;
 import com.example.backend.service.UsuarioService;
 import com.example.backend.usuarioRepositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.server.ServerErrorException;
 
 
 @RestController
@@ -23,71 +22,68 @@ public class usuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
-    public Iterable<Usuario> listaUsuario (){
+    public Iterable<Usuario> listaUsuario() {
         return usuarioRepository.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<?> casdastra (Usuario usuario) {
+    public ResponseEntity<?> casdastra(Usuario usuario) {
         try {
             usuarioService.validaCampoNome(usuario);
 
             Usuario usuarioCadastra = usuarioRepository.save(usuario);
             return ResponseEntity.ok(usuarioCadastra);
-        }catch (IllegalArgumentException e){
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (ServerErrorException e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Ocorreu um erro ao processar o cadastro.");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PutMapping
-    public Usuario altera (Usuario usuario){
-        return usuarioRepository.save(usuario);
+    public ResponseEntity<?> altera(Usuario usuario) {
+        try {
+            usuarioService.validaCampoNome(usuario);
+
+            Usuario usuarioCadastra = usuarioRepository.save(usuario);
+            return ResponseEntity.ok(usuarioCadastra);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (ServerErrorException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Ocorreu um erro ao processar o cadastro.");
+        }
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleta (@PathVariable Long id) {
-       usuarioRepository.deleteById(id);
+    public void deleta(@PathVariable Long id) {
+        usuarioRepository.deleteById(id);
     }
 
     @GetMapping("/acesso")
-    public ResponseEntity<?> acessoAoLogin (@RequestParam String nome,@RequestParam Integer senha) {
+    public ResponseEntity<?> acessoAoLogin(@RequestParam String nome, @RequestParam Integer senha) {
         try {
-            Usuario usuario = usuarioRepository.findByNomeAndSenha(nome, senha);
+            Boolean credenciaisValida = usuarioService.validarCredenciais(nome, senha);
 
-            if (usuario.getNome().equals(nome) && usuario.getSenha().equals(senha)) {
+            if (credenciaisValida) {
                 return ResponseEntity.ok("ok");
+            } else {
+                return ResponseEntity.notFound().build();
             }
-            return null;
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("erro a procura");
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @DeleteMapping("/all")
-    public void emCasoDeValoresNullOuSemPaciencia (){
+    public void emCasoDeValoresNullOuSemPaciencia() {
         usuarioRepository.deleteAll();
     }
 }
-
 
 
 

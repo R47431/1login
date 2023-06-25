@@ -16,14 +16,4 @@ public class Usuario {
     private Integer senha;
     private Boolean acesso;
 
-
-    public Usuario() {
-    }
-
-    public Usuario(String nome, int senha, boolean acesso) {
-        this.nome = nome;
-        this.senha = senha;
-        this.acesso = acesso;
-    }
-
 }
