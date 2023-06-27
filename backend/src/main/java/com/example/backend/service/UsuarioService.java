@@ -11,7 +11,6 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
-
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -26,6 +25,6 @@ public class UsuarioService {
 
     public Boolean validarCredenciais(String nome, Integer senha) {
         Usuario usuario = usuarioRepository.findByNomeAndSenha(nome, senha);
-        return (usuario == null || (!usuario.getNome().equals(nome) && !usuario.getSenha().equals(senha)));
+        return (usuario.getNome().equals(nome) && usuario.getSenha().equals(senha));
     }
 }

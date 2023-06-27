@@ -4,10 +4,15 @@ package com.example.backend.controller;
 import com.example.backend.models.Usuario;
 import com.example.backend.service.UsuarioService;
 import com.example.backend.usuarioRepositorio.UsuarioRepository;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerErrorException;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -66,10 +71,16 @@ public class usuarioController {
     @GetMapping("/acesso")
     public ResponseEntity<?> acessoAoLogin(@RequestParam String nome, @RequestParam Integer senha) {
         try {
-            Boolean credenciaisValida = usuarioService.validarCredenciais(nome, senha);
 
+            Boolean credenciaisValida = usuarioService.validarCredenciais(nome, senha);
+            Optional<Usuario> uau = usuarioRepository.findByNome(nome);
             if (credenciaisValida) {
-                return ResponseEntity.ok("ok");
+
+                Map<String, Object> resposta = new HashMap<>();
+                resposta.put("usurio", uau);
+                resposta.put("resposta", "tai o usuario");
+
+                return ResponseEntity.ok(resposta);
             } else {
                 return ResponseEntity.notFound().build();
             }
