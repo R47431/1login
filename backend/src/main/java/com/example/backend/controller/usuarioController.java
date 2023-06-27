@@ -4,14 +4,13 @@ package com.example.backend.controller;
 import com.example.backend.models.Usuario;
 import com.example.backend.service.UsuarioService;
 import com.example.backend.usuarioRepositorio.UsuarioRepository;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerErrorException;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -68,24 +67,23 @@ public class usuarioController {
         usuarioRepository.deleteById(id);
     }
 
-    @GetMapping("/acesso")
-    public ResponseEntity<?> acessoAoLogin(@RequestParam String nome, @RequestParam Integer senha) {
+    @GetMapping("/login")
+    public ResponseEntity<?> acessoAoLogin(@RequestParam String nome, @RequestParam Integer senha,@RequestParam boolean logado) {
         try {
+            Boolean usuarioCadastrado = usuarioService.usuarioCadastrado(nome, senha, logado);
+            Optional<Usuario> obterUsuatio = usuarioRepository.findByNome(nome);
 
-            Boolean credenciaisValida = usuarioService.validarCredenciais(nome, senha);
-            Optional<Usuario> uau = usuarioRepository.findByNome(nome);
-            if (credenciaisValida) {
-
-                Map<String, Object> resposta = new HashMap<>();
-                resposta.put("usurio", uau);
-                resposta.put("resposta", "tai o usuario");
+            if (usuarioCadastrado) {
+                HashMap<String, Object> resposta = new HashMap<>();
+                resposta.put("Usuario", obterUsuatio);
+                resposta.put("resposta", "usuario esta Cadastrado");
 
                 return ResponseEntity.ok(resposta);
             } else {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nao Cadastrado");
             }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("erro a procura");
+            return ResponseEntity.badRequest().body("acesso negado");
         }
     }
 

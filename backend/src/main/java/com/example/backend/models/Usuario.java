@@ -2,7 +2,6 @@ package com.example.backend.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -15,13 +14,14 @@ public class Usuario {
     private Long id;
     private String nome;
     private Integer senha;
-    private Boolean acesso;
+    private Boolean logado;
 
-    public Usuario(){}
+    public Usuario() {
+    }
 
-    public Usuario(String nome, Integer senha, Boolean acesso) {
+    public Usuario(String nome, Integer senha, Boolean logado) {
         this.nome = nome;
         this.senha = senha;
-        this.acesso = acesso;
+        this.logado = logado;
     }
 }
