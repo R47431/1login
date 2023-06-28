@@ -15,7 +15,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public void validaCampoNome(@NotNull Usuario usuario) {
+    public void nomeExistente(@NotNull Usuario usuario) {
 
         Optional<Usuario> nomeExistente = usuarioRepository.findByNome(usuario.getNome());
 
@@ -24,10 +24,8 @@ public class UsuarioService {
         }
     }
 
-    public Boolean usuarioCadastrado(String nome, Integer senha,boolean logado) {
-        Usuario usuario = usuarioRepository.findByNomeAndSenhaAndLogado(nome, senha,logado);
-        return (usuario.getNome().equals(nome) && usuario.getSenha().equals(senha)&& usuario.getLogado());
+    public Boolean usuarioCadastrado(String nome, Integer senha) {
+        Usuario usuario = usuarioRepository.findByNomeAndSenha(nome, senha);
+        return (usuario.getNome().equals(nome) && usuario.getSenha().equals(senha) && usuario.getLogado());
     }
-    //TODO
-    // fazer um metodo que mude o estado logado para true fazendo o usuario pode acessa.
 }

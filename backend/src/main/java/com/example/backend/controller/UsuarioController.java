@@ -17,7 +17,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/")
-public class usuarioController {
+public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -33,8 +33,9 @@ public class usuarioController {
     @PostMapping
     public ResponseEntity<?> casdastra(Usuario usuario) {
         try {
-            usuarioService.validaCampoNome(usuario);
+            usuarioService.nomeExistente(usuario);
 
+            usuario.setLogado(true);
             Usuario usuarioCadastra = usuarioRepository.save(usuario);
             return ResponseEntity.ok(usuarioCadastra);
 
@@ -46,14 +47,15 @@ public class usuarioController {
         }
     }
 
-    @PutMapping
+    @PutMapping(path = "/{id}")
     public ResponseEntity<?> altera(Usuario usuario) {
         try {
-            usuarioService.validaCampoNome(usuario);
+            usuarioService.nomeExistente(usuario);
 
+            usuario.setLogado(true);
             Usuario usuarioCadastra = usuarioRepository.save(usuario);
-            return ResponseEntity.ok(usuarioCadastra);
 
+            return ResponseEntity.ok(usuarioCadastra);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (ServerErrorException e) {
@@ -68,9 +70,9 @@ public class usuarioController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<?> acessoAoLogin(@RequestParam String nome, @RequestParam Integer senha,@RequestParam boolean logado) {
+    public ResponseEntity<?> acessoAoLogin(@RequestParam String nome, @RequestParam Integer senha) {
         try {
-            Boolean usuarioCadastrado = usuarioService.usuarioCadastrado(nome, senha, logado);
+            Boolean usuarioCadastrado = usuarioService.usuarioCadastrado(nome, senha);
             Optional<Usuario> obterUsuatio = usuarioRepository.findByNome(nome);
 
             if (usuarioCadastrado) {
@@ -87,12 +89,8 @@ public class usuarioController {
         }
     }
 
-
     @DeleteMapping("/all")
     public void emCasoDeValoresNullOuSemPaciencia() {
         usuarioRepository.deleteAll();
     }
 }
-
-
-
