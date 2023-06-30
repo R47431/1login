@@ -1,0 +1,35 @@
+<body>
+    <form>
+        <input type="text" name="nome" placeholder="nome" class="form-control" [(ngModel)]="usuario.nome">   
+        <input type="number" name="idade" placeholder="idade" class="form-control" [(ngModel)]="usuario.senha">
+      
+        <input type="button" value="Cadastrar" class="form-control" (click)="cadastrar()">
+    </form>
+
+ 
+
+
+
+
+    
+        <table class="table">
+            <thead>
+              <tr>
+                <td>#</td>
+                <td>nome</td>
+                <td>senha</td>
+                <td>acesso</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of usuarios; index as i">
+                <td>{{i+1}}</td>
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.senha}}</td>
+                <td>{{cliente.logado}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </body>
+    
+

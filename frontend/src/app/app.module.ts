@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AposLoginComponent } from './pages/apos-login/apos-login.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { CadastraComponent } from './pages/cadastra/cadastra.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AposLoginComponent
+    AposLoginComponent,
+    CadastraComponent
   ],
   imports: [
     BrowserModule,
