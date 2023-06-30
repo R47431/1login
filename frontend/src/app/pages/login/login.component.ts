@@ -1,26 +1,40 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/modelo/Usuario';
+import { HttpsService } from 'src/app/service/https.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   usuario = new Usuario();
+  usuarios: Usuario[] = [];
 
-  campoInvalido ={
-    nome:false,
-    senha:false,
-    boolean:false
+  mostraAlerta: boolean = false;
+
+  constructor(private httpsSevice: HttpsService) {}
+
+  ngOnInit(): void {}
+
+ 
+
+
+  login(): void {
+    this.httpsSevice.login(this.usuario.nome,this.usuario.senha)
+      .subscribe(data => {
+
+        if (data) {
+          window.location.href = '/aposLogin';
+        } else {
+          alert('Por favor, preencha o nome e a senha corretamente.');
+        }
+      });
   }
 
-  constructor() {}
   
-  ngOnInit(): void {
-    
-  }
 
+  /*
   login(): void {
     let validaNome = this.validaCampo('nome');
     let validaSenha = this.validaCampo('senha');
@@ -33,21 +47,6 @@ export class LoginComponent {
       alert('Por favor, preencha o nome e o senha corretamente.');
     }
   }
+*/
 
-  validaCampo(campo: string): boolean {
-    if(campo === 'nome'){
-        this.campoInvalido.nome = this.usuario.nome ==='';
-        return !this.campoInvalido.nome;
-    }else if (campo === 'senha') {
-        this.campoInvalido.senha = this.usuario.senha === null;
-        return !this.campoInvalido.senha;
-    }else if (campo === 'acesso'){
-
-      return !this.campoInvalido.boolean;
-    }else{
-        alert('campo invalidos');
-        return false
-    }
-
-  }
 }

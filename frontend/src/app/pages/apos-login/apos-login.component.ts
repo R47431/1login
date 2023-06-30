@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/modelo/Usuario';
-import { AposLoginService } from 'src/app/service/apos-login.service';
+import { HttpsService } from 'src/app/service/https.service';
 
 @Component({
   selector: 'app-apos-login',
@@ -11,7 +11,7 @@ export class AposLoginComponent {
   usuarios:Usuario[] = [];
   usuario = new Usuario;
 
-  constructor(private usuarioAposLogin: AposLoginService){ }
+  constructor(private usuarioAposLogin: HttpsService){ }
 
   ngOnInit(): void{
     this.lista();
@@ -29,8 +29,8 @@ export class AposLoginComponent {
   }
 
   valida(): void {
-    if(this.usuario.acesso === false){
-      this.usuarios = this.usuarios.filter(usuario => !usuario.acesso);
+    if(this.usuario.logado === false){
+      this.usuarios = this.usuarios.filter(usuario => !usuario.logado);
     }
   }
 }

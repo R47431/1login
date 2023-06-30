@@ -1,6 +1,6 @@
 export class Usuario {
-    id: string = "";
+    id: number = 0;
     nome: string = "";
-    senha: string = "";
-    acesso: Boolean = false;
+    senha: number = 0;
+    logado: Boolean = false;
 }

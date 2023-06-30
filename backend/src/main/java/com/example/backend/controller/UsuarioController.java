@@ -10,20 +10,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerErrorException;
 
-import java.util.HashMap;
-import java.util.Optional;
-
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
+        this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
+    }
 
     @GetMapping
     public Iterable<Usuario> listaUsuario() {
@@ -69,18 +71,13 @@ public class UsuarioController {
         usuarioRepository.deleteById(id);
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<?> acessoAoLogin(@RequestParam String nome, @RequestParam Integer senha) {
+    @PostMapping("/login")
+    public ResponseEntity<?> acessoAoLogin(String nome,Integer senha) {
         try {
             Boolean usuarioCadastrado = usuarioService.usuarioCadastrado(nome, senha);
-            Optional<Usuario> obterUsuatio = usuarioRepository.findByNome(nome);
 
             if (usuarioCadastrado) {
-                HashMap<String, Object> resposta = new HashMap<>();
-                resposta.put("Usuario", obterUsuatio);
-                resposta.put("resposta", "usuario esta Cadastrado");
-
-                return ResponseEntity.ok(resposta);
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body("ola");
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nao Cadastrado");
             }
