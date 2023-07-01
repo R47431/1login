@@ -75,12 +75,10 @@ public class UsuarioController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> acessoAoLogin(@RequestBody Usuario usuario, String nome,Integer senha) {
+    public ResponseEntity<?> acessoAoLogin(@RequestBody Usuario usuario) {
         try {
-            usuarioService.usuarioCadastrado(usuario);
-
-            Optional<Usuario> a = usuarioRepository.findByNomeAndSenha(nome,senha);
-            return ResponseEntity.ok().body(a);
+            Usuario usuarioExistente =usuarioService.validarUsuarioExistente(usuario);
+            return ResponseEntity.ok().body(usuarioExistente);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("acesso negado");

@@ -29,15 +29,20 @@ export class CadastraComponent {
       
   }
   cadastrar(): void {
-    this.httpsSevice.cadastraUsuario(this.usuario).subscribe((data) => {
-      this.usuarios.push(data);
-      this.limpaFormulario;
-      alert("cadastrado");
-      this.mostraAlerta = true;
-      setTimeout(() => {
-        this.mostraAlerta = false;
-      }, 2000);
-    });
+    this.httpsSevice.cadastraUsuario(this.usuario).subscribe(
+      (data) => {
+        this.usuarios.push(data);
+        this.limpaFormulario();
+        alert('Usuário cadastrado com sucesso!');
+      },
+      (error) => {
+        if (error.status === 400 && error.error === 'Nome de usuário em uso') {
+          alert('Nome de usuário já está em uso. Por favor, escolha outro nome.');
+        } else {
+          alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
+        }
+      }
+    );
   }
 
   limpaFormulario(): void {

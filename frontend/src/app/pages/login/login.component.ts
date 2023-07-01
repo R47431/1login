@@ -17,37 +17,25 @@ export class LoginComponent {
 
   ngOnInit(): void {}
 
- 
-
-
   login(): void {
-    this.httpsSevice.login(this.usuario)
-      .subscribe(data => {
+    this.httpsSevice.login(this.usuario).subscribe(
+      (data) => {
         let nome = this.usuario.nome;
         let senha = this.usuario.senha;
+
         if (nome && senha) {
           window.location.href = '/aposLogin';
         } else {
           alert('Por favor, preencha o nome e a senha corretamente.');
         }
-      });
+      },
+      (error) => {
+        if (error.status === 400) {
+          alert('Nome ou Senha Incorretos');
+        } else {
+          alert('Erro ao usuário. Por favor, tente novamente.');
+        }
+      }
+    );
   }
-
-  
-
-  /*
-  login(): void {
-    let validaNome = this.validaCampo('nome');
-    let validaSenha = this.validaCampo('senha');
-    let validaAcesso = this.validaCampo('acesso'); 
-    
-
-    if (validaNome && validaSenha && validaAcesso === true) {
-      window.location.href = '/aposLogin';
-    } else {
-      alert('Por favor, preencha o nome e o senha corretamente.');
-    }
-  }
-*/
-
 }

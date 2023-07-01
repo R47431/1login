@@ -9,8 +9,8 @@
     />
     <input
       type="number"
-      name="idade"
-      placeholder="idade"
+      name="senha"
+      placeholder="senha"
       class="form-control"
       [(ngModel)]="usuario.senha"
     />
@@ -33,11 +33,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cliente of usuarios; index as i">
+      <tr *ngFor="let usuario of usuarios; index as i">
         <td>{{ i + 1 }}</td>
-        <td>{{ cliente.nome }}</td>
-        <td>{{ cliente.senha }}</td>
-        <td>{{ cliente.logado }}</td>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.senha }}</td>
+        <td>{{ usuario.logado }}</td>
       </tr>
     </tbody>
   </table>

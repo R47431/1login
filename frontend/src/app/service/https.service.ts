@@ -15,8 +15,7 @@ export class HttpsService {
     return this.http.get<Usuario[]>(`${this.url}`);
   }
 
- login(usuario: Usuario): Observable<any> {
- 
+ login(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.url}/login`,usuario);
   } 
 

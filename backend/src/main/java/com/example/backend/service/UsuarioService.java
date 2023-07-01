@@ -26,11 +26,18 @@ public class UsuarioService {
     }
 
 
-    public void usuarioCadastrado(Usuario usuario) {
-        Optional<Usuario> nomeExistente = usuarioRepository.findByNomeAndSenha(usuario.getNome(),usuario.getSenha());
-        if (nomeExistente.get().equals(usuario)) {
-
+    public Usuario validarUsuarioExistente(Usuario usuario) {
+        Usuario usuarioExistente = usuarioRepository.findByNomeAndSenha(usuario.getNome(),usuario.getSenha());
+        if (usuarioExistente != null) {
+            if (!usuarioExistente.getNome().equals(usuario.getNome())) {
+                throw new IllegalArgumentException("Nome incorreta");
+            }else if (!usuarioExistente.getSenha().equals(usuario.getSenha())){
+                throw new IllegalArgumentException("Senha incorreta");
+            }
+        } else {
+            throw new IllegalArgumentException("Usuário não encontrado");
         }
+        return usuario;
     }
 
 }
