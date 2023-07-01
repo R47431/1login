@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerErrorException;
 
+import java.util.Optional;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -33,7 +35,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> casdastra(Usuario usuario) {
+    public ResponseEntity<?> casdastra(@RequestBody Usuario usuario) {
         try {
             usuarioService.nomeExistente(usuario);
 
@@ -50,7 +52,7 @@ public class UsuarioController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<?> altera(Usuario usuario) {
+    public ResponseEntity<?> altera(@RequestBody Usuario usuario) {
         try {
             usuarioService.nomeExistente(usuario);
 
@@ -71,17 +73,16 @@ public class UsuarioController {
         usuarioRepository.deleteById(id);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> acessoAoLogin(String nome,Integer senha) {
-        try {
-            Boolean usuarioCadastrado = usuarioService.usuarioCadastrado(nome, senha);
 
-            if (usuarioCadastrado) {
-                return ResponseEntity.status(HttpStatus.ACCEPTED).body("ola");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nao Cadastrado");
-            }
+    @PostMapping("/login")
+    public ResponseEntity<?> acessoAoLogin(@RequestBody Usuario usuario, String nome,Integer senha) {
+        try {
+            usuarioService.usuarioCadastrado(usuario);
+
+            Optional<Usuario> a = usuarioRepository.findByNomeAndSenha(nome,senha);
+            return ResponseEntity.ok().body(a);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body("acesso negado");
         }
     }

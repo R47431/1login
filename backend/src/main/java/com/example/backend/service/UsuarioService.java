@@ -19,20 +19,18 @@ public class UsuarioService {
     }
 
     public void nomeExistente(Usuario usuario) {
-
         Optional<Usuario> nomeExistente = usuarioRepository.findByNome(usuario.getNome());
-
         if (nomeExistente.isPresent() && !nomeExistente.get().equals(usuario)) {
             throw new IllegalArgumentException("O nome do produto já está em uso.");
         }
     }
-    public Usuario a(String nome, Integer senha){
-        return usuarioRepository.findByNomeAndSenha(nome,senha);
-    }
 
-    public Boolean usuarioCadastrado(String nome, Integer senha) {
-        Usuario usuario = usuarioRepository.findByNomeAndSenha(nome, senha);
-        return (usuario.getNome().equals(nome) && usuario.getSenha().equals(senha) && usuario.getLogado());
+
+    public void usuarioCadastrado(Usuario usuario) {
+        Optional<Usuario> nomeExistente = usuarioRepository.findByNomeAndSenha(usuario.getNome(),usuario.getSenha());
+        if (nomeExistente.get().equals(usuario)) {
+
+        }
     }
 
 }
