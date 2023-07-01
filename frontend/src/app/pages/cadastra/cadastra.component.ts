@@ -32,6 +32,7 @@ export class CadastraComponent {
     this.httpsSevice.cadastraUsuario(this.usuario).subscribe((data) => {
       this.usuarios.push(data);
       this.limpaFormulario;
+      alert("cadastrado");
       this.mostraAlerta = true;
       setTimeout(() => {
         this.mostraAlerta = false;

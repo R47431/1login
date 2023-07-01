@@ -21,10 +21,11 @@ export class LoginComponent {
 
 
   login(): void {
-    this.httpsSevice.login(this.usuario.nome,this.usuario.senha)
+    this.httpsSevice.login(this.usuario)
       .subscribe(data => {
-
-        if (data) {
+        let nome = this.usuario.nome;
+        let senha = this.usuario.senha;
+        if (nome && senha) {
           window.location.href = '/aposLogin';
         } else {
           alert('Por favor, preencha o nome e a senha corretamente.');

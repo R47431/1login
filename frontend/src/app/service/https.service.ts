@@ -15,12 +15,9 @@ export class HttpsService {
     return this.http.get<Usuario[]>(`${this.url}`);
   }
 
- login(nome:string,senha:number): Observable<any> {
-  const body = {
-    nome:nome,
-    senha:senha
-  }
-    return this.http.post<Usuario>(`${this.url}/login`,body);
+ login(usuario: Usuario): Observable<any> {
+ 
+    return this.http.post<Usuario>(`${this.url}/login`,usuario);
   } 
 
   cadastraUsuario(usuario:Usuario): Observable<Usuario> {
