@@ -25,7 +25,6 @@ public class UsuarioService {
         }
     }
 
-
     public Usuario validarUsuarioExistente(Usuario usuario) {
         Usuario usuarioExistente = usuarioRepository.findByNomeAndSenha(usuario.getNome(),usuario.getSenha());
         if (usuarioExistente != null) {
@@ -38,5 +37,14 @@ public class UsuarioService {
             throw new IllegalArgumentException("Usuário não cadastrado") ;
         }
         return usuario;
+    }
+
+    //testas com filtro
+    public Usuario validarUsuario(Usuario usuario) {
+        Usuario usuarioExistente = usuarioRepository.findByNomeAndSenha(usuario.getNome(),usuario.getSenha());
+        return Optional.ofNullable(usuarioExistente)
+                .filter(u ->u.getNome().equals(usuario.getNome()))
+                .filter(u ->u.getSenha().equals(usuario.getSenha()))
+                .orElseThrow(()-> new IllegalArgumentException("Usuário não cadastrado"));
     }
 }

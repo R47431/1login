@@ -9,11 +9,13 @@
       [(ngModel)]="usuario.nome"
     />
     <input
-      type="number"
+      type="text"
       name="senha"
       placeholder="senha"
       class="form-control"
       [(ngModel)]="usuario.senha"
+      required
+      pattern="[0-9]*"
     />
 
     <input 

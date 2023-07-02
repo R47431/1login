@@ -76,7 +76,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<?> acessoAoLogin(@RequestBody Usuario usuario) {
         try {
-            Usuario usuarioExistente = usuarioService.validarUsuarioExistente(usuario);
+            Usuario usuarioExistente = usuarioService.validarUsuario(usuario);
             return ResponseEntity.ok().body(usuarioExistente);
         } catch (Exception e) {
             e.printStackTrace();

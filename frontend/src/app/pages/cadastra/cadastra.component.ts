@@ -29,20 +29,28 @@ export class CadastraComponent {
       
   }
   cadastra(): void {
-    this.httpsSevice.cadastraUsuario(this.usuario).subscribe(
-      (data) => {
+    this.httpsSevice.cadastraUsuario(this.usuario).subscribe({
+      next:(data) => {
         this.usuarios.push(data);
-        this.limpaFormulario();
         alert('Usuário cadastrado com sucesso!');
       },
-      (error) => {
-        if (error.status === 400 && error.error === 'Nome de usuário em uso') {
-          alert('Nome de usuário já está em uso. Por favor, escolha outro nome.');
+      error:(error) => {
+        let senha = this.usuario.senha;
+        
+        if (senha === "") {
+          alert('Por favor, preencha o campo de senha.');
+        } else if (!/^[0-9]+$/.test(senha)) {
+          alert('A senha não pode ser alfabética.');
+        } else if (error.status === 400) {
+          alert('Nome de usuário já está em uso');
         } else {
           alert('Erro ao cadastrar usuário. Por favor, tente novamente.');
         }
+      },
+      complete: () => {
+        window.location.href='login';
       }
-    );
+    });
   }
 
   limpaFormulario(): void {
