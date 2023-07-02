@@ -28,7 +28,7 @@ export class CadastraComponent {
       
       
   }
-  cadastrar(): void {
+  cadastra(): void {
     this.httpsSevice.cadastraUsuario(this.usuario).subscribe(
       (data) => {
         this.usuarios.push(data);

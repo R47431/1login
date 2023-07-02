@@ -35,9 +35,8 @@ public class UsuarioService {
                 throw new IllegalArgumentException("Senha incorreta");
             }
         } else {
-            throw new IllegalArgumentException("Usuário não encontrado");
+            throw new IllegalArgumentException("Usuário não cadastrado") ;
         }
         return usuario;
     }
-
 }

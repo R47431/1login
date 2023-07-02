@@ -73,11 +73,10 @@ public class UsuarioController {
         usuarioRepository.deleteById(id);
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<?> acessoAoLogin(@RequestBody Usuario usuario) {
         try {
-            Usuario usuarioExistente =usuarioService.validarUsuarioExistente(usuario);
+            Usuario usuarioExistente = usuarioService.validarUsuarioExistente(usuario);
             return ResponseEntity.ok().body(usuarioExistente);
         } catch (Exception e) {
             e.printStackTrace();

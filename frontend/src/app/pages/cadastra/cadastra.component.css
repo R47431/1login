@@ -5,3 +5,22 @@ form{
     border: 10px;
   
   }
+.card{
+  width: 300px;
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #d4cfcf;
+  border-right: 5px solid #d4cfcf;
+  border-radius: 20px;
+}
+input{
+  margin-bottom: 5px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #acabab;
+  border-radius: 10px;
+}
+p{
+  text-align: left;
+  font-size: x-large;
+}

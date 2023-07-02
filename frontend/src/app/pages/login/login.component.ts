@@ -18,8 +18,8 @@ export class LoginComponent {
   ngOnInit(): void {}
 
   login(): void {
-    this.httpsSevice.login(this.usuario).subscribe(
-      (data) => {
+    this.httpsSevice.login(this.usuario).subscribe({
+      next:(data) => {
         let nome = this.usuario.nome;
         let senha = this.usuario.senha;
 
@@ -29,13 +29,13 @@ export class LoginComponent {
           alert('Por favor, preencha o nome e a senha corretamente.');
         }
       },
-      (error) => {
+      error:(error) => {
         if (error.status === 400) {
           alert('Nome ou Senha Incorretos');
         } else {
           alert('Erro ao usuário. Por favor, tente novamente.');
         }
       }
-    );
+    });
   }
 }

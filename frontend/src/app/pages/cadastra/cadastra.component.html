@@ -1,5 +1,6 @@
 <body>
-  <form>
+  <form class="card">
+    <p>Cadastrar</p>
     <input
       type="text"
       name="nome"
@@ -15,30 +16,11 @@
       [(ngModel)]="usuario.senha"
     />
 
-    <input
+    <input 
       type="button"
-      value="Cadastrar"
+      value="Cadastra"
       class="form-control"
-      (click)="cadastrar()"
+      (click)="cadastra()"
     />
   </form>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <td>#</td>
-        <td>nome</td>
-        <td>senha</td>
-        <td>acesso</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let usuario of usuarios; index as i">
-        <td>{{ i + 1 }}</td>
-        <td>{{ usuario.nome }}</td>
-        <td>{{ usuario.senha }}</td>
-        <td>{{ usuario.logado }}</td>
-      </tr>
-    </tbody>
-  </table>
 </body>
