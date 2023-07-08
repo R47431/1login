@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/modelo/Usuario';
 import { HttpsService } from 'src/app/service/https.service';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-apos-login',
@@ -11,7 +12,9 @@ export class AposLoginComponent {
   usuarios:Usuario[] = [];
   usuario = new Usuario;
 
-  constructor(private usuarioAposLogin: HttpsService){ }
+  constructor(private usuarioAposLogin: HttpsService,
+    private storage: StorageService
+    ){ }
 
   ngOnInit(): void{
     this.lista();
@@ -20,17 +23,13 @@ export class AposLoginComponent {
   lista(): void {
     this.usuarioAposLogin.listaUsuario()
     .subscribe(data => {
-      this.valida();
-      this.usuarios = data;
+      if(this.storage.get('cadastrado') === "true"){
+        this.usuarios = data;
+      }else{
+        alert('usuario nao cadastrado');
+      }
       
     });
-      
-      
   }
-
-  valida(): void {
-    if(this.usuario.logado === false){
-      this.usuarios = this.usuarios.filter(usuario => !usuario.logado);
-    }
-  }
+  
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/modelo/Usuario';
 import { HttpsService } from 'src/app/service/https.service';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-cadastra',
@@ -13,7 +14,10 @@ export class CadastraComponent {
 
   mostraAlerta: boolean = false;
 
-  constructor(private httpsSevice:HttpsService){}
+  constructor(
+    private httpsSevice: HttpsService,
+    private storage: StorageService
+    ) {}
 
   ngOnInit(){
     this.lista();
@@ -48,6 +52,7 @@ export class CadastraComponent {
         }
       },
       complete: () => {
+        this.storage.set('cadastrado', JSON.stringify(this.usuario.registrado));
         window.location.href='login';
       }
     });
