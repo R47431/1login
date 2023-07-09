@@ -46,7 +46,6 @@ public class UsuarioController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (ServerErrorException e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body("Ocorreu um erro ao processar o cadastro.");
         }
     }
@@ -63,7 +62,6 @@ public class UsuarioController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (ServerErrorException e) {
-            e.printStackTrace();
             return ResponseEntity.internalServerError().body("Ocorreu um erro ao processar o cadastro.");
         }
     }
@@ -79,7 +77,6 @@ public class UsuarioController {
             Usuario usuarioExistente = usuarioService.validarUsuario(usuario);
             return ResponseEntity.ok().body(usuarioExistente);
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().body("acesso negado");
         }
     }
